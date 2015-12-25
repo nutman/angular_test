@@ -11,15 +11,27 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
     <link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css" />
+    <link rel="stylesheet" type="text/css" href="public/stylesheets/style.css" />
 
-    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+
     <script type="text/javascript" src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
     <script type="text/javascript" src="public/js/app.js"></script>
     <script type="text/javascript" src="public/js/app.controller.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="advancedDemo row">
+        <div ng-repeat="containers in model" class="col-md-4">
+            <div class="dropzone box box-yellow" ng-include="'views/advanced.html'"></div>
+        </div>
+    </div>
 
+    <div view-source="advanced"></div>
+
+    <h2>Generated Model</h2>
+    <pre>{{modelAsJson}}</pre>
+    </div>
 </body>
 </html>

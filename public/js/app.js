@@ -1,2 +1,2 @@
-var app = angular.module('ngBoilerplate', [
+angular.module('ngBoilerplate', ['dndLists'
     ]);

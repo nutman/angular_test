@@ -1,8 +1,157 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
 
-a {
-  color: #00B7FF;
+.box {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.box > h3 {
+  color: #333;
+  border-color: #ddd;
+  border-bottom: 1px solid transparent;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  background-repeat: repeat-x;
+  display: block;
+  font-size: 16px;
+  padding: 10px 15px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.box-padding {
+  padding: 15px;
+}
+
+.box-padding > h3 {
+  margin: -15px;
+  margin-bottom: 15px;
+}
+
+.box-grey {
+  border-color: #ddd;
+}
+
+.box-grey > h3 {
+  background-color: #f5f5f5;
+  background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+  background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+}
+
+.box-blue {
+  border-color: #bce8f1;
+}
+
+.box-blue > h3 {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  background-image: -webkit-linear-gradient(top,#d9edf7 0,#c4e3f3 100%);
+  background-image: linear-gradient(to bottom,#d9edf7 0,#c4e3f3 100%);
+}
+
+.box-yellow {
+  border-color: #faebcc;
+}
+
+.box-yellow > h3 {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  background-image: -webkit-linear-gradient(top,#fcf8e3 0,#faf2cc 100%);
+  background-image: linear-gradient(to bottom,#fcf8e3 0,#faf2cc 100%);
+}
+
+/***************************** Required styles *****************************/
+
+/**
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+.advancedDemo ul[dnd-list],
+.advancedDemo ul[dnd-list] > li {
+  position: relative;
+}
+
+/***************************** Dropzone Styling *****************************/
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+.advancedDemo .dropzone ul[dnd-list] {
+  min-height: 42px;
+  margin: 0px;
+  padding-left: 0px;
+}
+
+/**
+ * The dnd-lists's child elements currently MUST have
+ * position: relative. Otherwise we can not determine
+ * whether the mouse pointer is in the upper or lower
+ * half of the element we are dragging over. In other
+ * browsers we can use event.offsetY for this.
+ */
+.advancedDemo .dropzone li {
+  display: block;
+}
+
+/**
+ * Reduce opacity of elements during the drag operation. This allows the user
+ * to see where he is dropping his element, even if the element is huge. The
+ * .dndDragging class is automatically set during the drag operation.
+ */
+.advancedDemo .dropzone .dndDragging {
+  opacity: 0.7;
+}
+
+/**
+ * The dndDraggingSource class will be applied to the source element of a drag
+ * operation. It makes sense to hide it to give the user the feeling that he's
+ * actually moving it. Note that the source element has also .dndDragging class.
+ */
+.advancedDemo .dropzone .dndDraggingSource {
+  display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be added as child of the dnd-list
+ * while the user is dragging over it.
+ */
+.advancedDemo .dropzone .dndPlaceholder {
+  background-color: #ddd !important;
+  min-height: 42px;
+  display: block;
+  position: relative;
+}
+
+/***************************** Element type specific styles *****************************/
+
+.advancedDemo .dropzone .itemlist {
+  min-height: 120px !important;
+}
+
+.advancedDemo .dropzone .itemlist > li {
+  background-color: #337ab7;
+  border: none;
+  border-radius: .25em;
+  color: #fff;
+  float: left;
+  font-weight: 700;
+  height: 50px;
+  margin: 5px;
+  padding: 3px;
+  text-align: center;
+  width: 50px;
+}
+
+.advancedDemo .dropzone .container-element {
+  margin: 10px;
 }
