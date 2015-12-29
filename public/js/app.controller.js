@@ -37,7 +37,11 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
             for (var j = 0; j < 2; ++j) {
                 $scope.model[i].push([]);
                 for (var k = 0; k < 7; ++k) {
-                    $scope.model[i][j].push({label: 'Item ' + id++});
+                    $scope.model[i][j].push({
+                        label: 'Item ' + id++,
+                        name: 'Black',
+                        country: 'US'
+                    });
                 }
             }
         }

@@ -7,7 +7,9 @@
             <!--<a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>-->
         <!--</li>-->
     </ul>
-    Selected: <b>{{ selected.item.label }}</b>
+    <p>Selected: <b>{{ selected.item.label }}</b></p>
+    <p>Name: <b>{{ selected.item.name }}</b></p>
+    <p>Country: <b>{{ selected.item.country }}</b></p>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
