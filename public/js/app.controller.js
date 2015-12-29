@@ -64,9 +64,7 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
                 controller: 'ModalInstanceCtrl',
                 size: size,
                 resolve: {
-                    item: function () {
-                        return item;
-                    }
+                    item: item
                 }
             });
 
@@ -87,15 +85,23 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
 
 angular.module('ngBoilerplate').controller('ModalInstanceCtrl', [ '$scope', '$uibModalInstance', 'item',
     function($scope, $uibModalInstance, item) {
+
         $scope.selected = {
             item: item
         };
 
-        $scope.ok = function () {
+        $scope.update = function (obj) {
+            $scope.selected.item = angular.copy(obj);
             $uibModalInstance.close($scope.selected.item);
+            item.label = angular.copy(obj.label);
+            item.name = angular.copy(obj.name);
+            item.country = angular.copy(obj.country);
         };
 
         $scope.cancel = function () {
+            $scope.item = angular.copy($scope.selected.item);
             $uibModalInstance.dismiss('cancel');
         };
+
+        $scope.cancel();
 }]);

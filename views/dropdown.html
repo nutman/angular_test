@@ -7,11 +7,13 @@
             <!--<a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a>-->
         <!--</li>-->
     </ul>
-    <p>Selected: <b>{{ selected.item.label }}</b></p>
-    <p>Name: <b>{{ selected.item.name }}</b></p>
-    <p>Country: <b>{{ selected.item.country }}</b></p>
+    <form>
+        <p>Selected: <b><input type="text" ng-model="item.label" value="{{ selected.item.label }}"></b></p>
+        <p>Name: <b><input type="text" ng-model="item.name" value="{{ selected.item.name }}"></b></p>
+        <p>Country: <b><input type="text" ng-model="item.country" value="{{ selected.item.country }}"></b></p>
+    </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-primary" type="button" ng-click="update(item)">OK</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>
