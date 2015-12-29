@@ -1,2 +1,4 @@
-angular.module('ngBoilerplate', ['dndLists'
+angular.module('ngBoilerplate', [
+    'dndLists',
+    'ui.bootstrap'
     ]);
