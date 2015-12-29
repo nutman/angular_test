@@ -1,5 +1,5 @@
-angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope',
-    function($scope) {
+angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '$log',
+    function($scope, $uibModal, $log) {
         $scope.dragoverCallback = function(event, index, external, type) {
             console.log('hello world')
             $scope.logListEvent('dragged over', event, index, external, type);
@@ -46,5 +46,52 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope',
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
 
+        /**
+         * dropdown
+         */
+
+        $scope.animationsEnabled = true;
+
+        $scope.open = function (size, item) {
+
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/dropdown.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    item: function () {
+                        return item;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        $scope.toggleAnimation = function () {
+            $scope.animationsEnabled = !$scope.animationsEnabled;
+        };
+
     }
 ]);
+
+
+angular.module('ngBoilerplate').controller('ModalInstanceCtrl', [ '$scope', '$uibModalInstance', 'item',
+    function($scope, $uibModalInstance, item) {
+        $scope.selected = {
+            item: item
+        };
+
+        $scope.ok = function () {
+            $uibModalInstance.close($scope.selected.item);
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+}]);

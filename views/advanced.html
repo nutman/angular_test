@@ -27,7 +27,8 @@
                     dnd-moved="items.splice($index, 1); logEvent('Item moved', event)"
                     dnd-copied="logEvent('Item copied', event)"
                     dnd-canceled="logEvent('Drag operation canceled', event)"
-                    dnd-dragend="logEvent('Drag operation ended', event)">
+                    dnd-dragend="logEvent('Drag operation ended', event)"
+                    ng-click="open('md', item)">
                     {{item.label}}
                 </li>
             </ul>
