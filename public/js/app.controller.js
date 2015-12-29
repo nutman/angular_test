@@ -1,13 +1,13 @@
-angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '$log',
-    function($scope, $uibModal, $log) {
-        $scope.dragoverCallback = function(event, index, external, type) {
+angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$log',
+    function ($scope, $uibModal, $log) {
+        $scope.dragoverCallback = function (event, index, external, type) {
             console.log('hello world')
             $scope.logListEvent('dragged over', event, index, external, type);
             // Disallow dropping in the third row. Could also be done with dnd-disable-if.
             return index < 10;
         };
 
-        $scope.dropCallback = function(event, index, item, external, type, allowedType) {
+        $scope.dropCallback = function (event, index, item, external, type, allowedType) {
             console.log('hello world')
             $scope.logListEvent('dropped at', event, index, external, type);
             if (external) {
@@ -17,12 +17,12 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
             return item;
         };
 
-        $scope.logEvent = function(message, event) {
+        $scope.logEvent = function (message, event) {
             console.log(message, '(triggered by the following', event.type, 'event)');
             console.log(event);
         };
 
-        $scope.logListEvent = function(action, event, index, external, type) {
+        $scope.logListEvent = function (action, event, index, external, type) {
             var message = external ? 'External ' : '';
             message += type + ' element is ' + action + ' position ' + index;
             $scope.logEvent(message, event);
@@ -46,16 +46,13 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
             }
         }
 
-        $scope.$watch('model', function(model) {
+        $scope.$watch('model', function (model) {
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
 
         /**
          * dropdown
          */
-
-        $scope.animationsEnabled = true;
-
         $scope.open = function (size, item) {
 
             var modalInstance = $uibModal.open({
@@ -74,6 +71,8 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
                 $log.info('Modal dismissed at: ' + new Date());
             });
         };
+        $scope.animationsEnabled = true;
+
 
         $scope.toggleAnimation = function () {
             $scope.animationsEnabled = !$scope.animationsEnabled;
@@ -83,8 +82,8 @@ angular.module('ngBoilerplate').controller('AppCtrl', [ '$scope', '$uibModal', '
 ]);
 
 
-angular.module('ngBoilerplate').controller('ModalInstanceCtrl', [ '$scope', '$uibModalInstance', 'item',
-    function($scope, $uibModalInstance, item) {
+angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'item',
+    function ($scope, $uibModalInstance, item) {
 
         $scope.selected = {
             item: item
@@ -104,4 +103,21 @@ angular.module('ngBoilerplate').controller('ModalInstanceCtrl', [ '$scope', '$ui
         };
 
         $scope.cancel();
-}]);
+    }]);
+
+angular.module('ngBoilerplate').config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
+        //
+        // For any unmatched url, redirect to /state1
+        $urlRouterProvider.otherwise("/");
+        //
+        // Now set up the states
+        $stateProvider
+            .state('item', {
+                url: "/item/:item",
+                templateUrl: "views/dropdown.html",
+                controllerProvider: function ( $stateParams) {
+                    console.log('params', $stateParams);
+                }
+            })
+    }]);

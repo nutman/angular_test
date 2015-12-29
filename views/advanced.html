@@ -28,7 +28,8 @@
                     dnd-copied="logEvent('Item copied', event)"
                     dnd-canceled="logEvent('Drag operation canceled', event)"
                     dnd-dragend="logEvent('Drag operation ended', event)"
-                    ng-click="open('md', item)">
+                    ng-click="open('md', item)"
+                    ui-sref="item({item:item.label})">
                     {{item.label}}
                 </li>
             </ul>
