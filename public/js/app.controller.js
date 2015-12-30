@@ -1,14 +1,12 @@
 angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$log', '$rootScope',
     function ($scope, $uibModal, $log, $rootScope) {
         $scope.dragoverCallback = function (event, index, external, type) {
-            console.log('hello world')
             $scope.logListEvent('dragged over', event, index, external, type);
             // Disallow dropping in the third row. Could also be done with dnd-disable-if.
             return index < 10;
         };
 
         $scope.dropCallback = function (event, index, item, external, type, allowedType) {
-            console.log('hello world')
             $scope.logListEvent('dropped at', event, index, external, type);
             if (external) {
                 if (allowedType === 'itemType' && !item.label) return false;
@@ -29,6 +27,7 @@ angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$
         };
 
         $scope.model = [];
+        $rootScope.model = $scope.model;
 
         // Initialize model
         var id = 10;
@@ -55,7 +54,6 @@ angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$
          */
         $scope.open = function (size, item) {
             $rootScope.selectedItem = item;
-
         };
         $scope.animationsEnabled = true;
 
@@ -63,13 +61,24 @@ angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$
         $scope.toggleAnimation = function () {
             $scope.animationsEnabled = !$scope.animationsEnabled;
         };
-
     }
 ]);
 
 
-angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uibModal', '$log', '$stateParams', '$state', '$rootScope',
-    function ($scope, $uibModal, $log, $stateParams, $state, $rootScope) {
+angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uibModal', '$log', '$stateParams', '$state', '$rootScope', '$filter',
+    function ($scope, $uibModal, $log, $stateParams, $state, $rootScope, $filter) {
+
+        if (!$rootScope.selectedItem) {
+            $rootScope.model.forEach(function(model) {
+                return model.forEach(function(item) {
+                    var elem = $filter('filter')(item, {label: $stateParams.item});
+                    if (elem.length) {
+                        $rootScope.selectedItem = elem[0];
+                        return;
+                    }
+                });
+            });
+        }
 
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
@@ -84,6 +93,7 @@ angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uib
         modalInstance.result.then(function (selectedItem) {
             $scope.selected = selectedItem;
         }, function () {
+            $state.go('/');
             $log.info('Modal dismissed at: ' + new Date());
         });
         /**
@@ -128,7 +138,8 @@ angular.module('ngBoilerplate').config(['$stateProvider', '$urlRouterProvider',
         // Now set up the states
         $stateProvider
             .state('/', {
-                url: '/'
+                url: '/',
+                controller: 'AppCtrl'
             })
             .state('item', {
                 url: "/item/:item",
