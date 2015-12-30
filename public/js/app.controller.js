@@ -1,5 +1,5 @@
-angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$log',
-    function ($scope, $uibModal, $log) {
+angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$log', '$rootScope',
+    function ($scope, $uibModal, $log, $rootScope) {
         $scope.dragoverCallback = function (event, index, external, type) {
             console.log('hello world')
             $scope.logListEvent('dragged over', event, index, external, type);
@@ -54,22 +54,8 @@ angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$
          * dropdown
          */
         $scope.open = function (size, item) {
+            $rootScope.selectedItem = item;
 
-            var modalInstance = $uibModal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'views/dropdown.html',
-                controller: 'ModalInstanceCtrl',
-                size: size,
-                resolve: {
-                    item: item
-                }
-            });
-
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
         };
         $scope.animationsEnabled = true;
 
@@ -82,9 +68,32 @@ angular.module('ngBoilerplate').controller('AppCtrl', ['$scope', '$uibModal', '$
 ]);
 
 
-angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uibModalInstance', 'item',
-    function ($scope, $uibModalInstance, item) {
+angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uibModal', '$log', '$stateParams', '$state', '$rootScope',
+    function ($scope, $uibModal, $log, $stateParams, $state, $rootScope) {
 
+        var modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/dropdown.html',
+            controller: 'ModalPopUpCtrl',
+            /*size: size,*/
+            resolve: {
+                item: $rootScope.selectedItem
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+            $scope.selected = selectedItem;
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+        /**
+         *
+         * @type {{item: (item|*)}}
+         */
+    }]);
+
+angular.module('ngBoilerplate').controller('ModalPopUpCtrl', ['$scope', '$uibModalInstance', 'item', '$state',
+    function ($scope, $uibModalInstance, item, $state) {
         $scope.selected = {
             item: item
         };
@@ -95,14 +104,19 @@ angular.module('ngBoilerplate').controller('ModalInstanceCtrl', ['$scope', '$uib
             item.label = angular.copy(obj.label);
             item.name = angular.copy(obj.name);
             item.country = angular.copy(obj.country);
+            $state.go('/');
         };
 
-        $scope.cancel = function () {
+        $scope.cancel = function (param) {
             $scope.item = angular.copy($scope.selected.item);
             $uibModalInstance.dismiss('cancel');
+            if (param){
+                $state.go('/');
+            }
         };
 
         $scope.cancel();
+
     }]);
 
 angular.module('ngBoilerplate').config(['$stateProvider', '$urlRouterProvider',
@@ -113,11 +127,11 @@ angular.module('ngBoilerplate').config(['$stateProvider', '$urlRouterProvider',
         //
         // Now set up the states
         $stateProvider
+            .state('/', {
+                url: '/'
+            })
             .state('item', {
                 url: "/item/:item",
-                templateUrl: "views/dropdown.html",
-                controllerProvider: function ( $stateParams) {
-                    console.log('params', $stateParams);
-                }
+                controller: 'ModalInstanceCtrl'
             })
     }]);
