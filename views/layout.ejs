@@ -8,10 +8,10 @@
     <!-- font awesome from BootstrapCDN -->
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css" />
-    <link rel="stylesheet" type="text/css" href="public/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="bower_components/angular/angular-csp.css"/>
+    <link rel="stylesheet" type="text/css" href="public/stylesheets/style.css"/>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>-->
@@ -19,12 +19,33 @@
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
-    <script type="text/javascript" src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+    <script type="text/javascript"
+            src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
     <script type="text/javascript" src="public/js/app.js"></script>
     <script type="text/javascript" src="public/js/app.controller.js"></script>
 </head>
 <body>
 <div class="container">
+
+    <div>
+        <label>Search: <input ng-model="searchText"></label>
+    </div>
+
+    <div class="row" ng-if="searchText">
+        <div class="col-md-4 box box-yellow">
+            <div ng-repeat="containers in model">
+                <div ng-repeat="items in containers">
+                    <div ng-repeat="item in items | filter: searchText"
+                         ng-click="open('md', item)"
+                         ui-sref="item({item:item.label})">
+                        {{item.label}} - {{items.length}}
+                    </div>
+                    <div ng-if="!items.length">hello world</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="advancedDemo row">
         <div ng-repeat="containers in model" class="col-md-4">
             <div class="dropzone box box-yellow" ng-include="'views/advanced.html'"></div>
@@ -35,7 +56,7 @@
 
     <h2>Generated Model</h2>
     <pre>{{modelAsJson}}</pre>
-    </div>
+</div>
 <ui-view/>
 </body>
 </html>
