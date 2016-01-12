@@ -25,7 +25,7 @@
     <script type="text/javascript" src="public/js/app.controller.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="container-fluid">
 
     <div>
         <label>Search: <input ng-model="searchText"></label>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="advancedDemo row">
-        <div ng-repeat="containers in model" class="col-md-4">
+        <div ng-repeat="containers in model" class="col-md-2">
             <div class="dropzone box box-yellow" ng-include="'views/advanced.html'"></div>
         </div>
     </div>
