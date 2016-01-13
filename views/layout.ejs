@@ -14,22 +14,35 @@
     <link rel="stylesheet" type="text/css" href="public/stylesheets/style.css"/>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>-->
-    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+-->
+<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
-    <script type="text/javascript"
-            src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
-    <script type="text/javascript" src="public/js/app.js"></script>
-    <script type="text/javascript" src="public/js/app.controller.js"></script>
+<script type="text/javascript" src="bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+<script type="text/javascript" src="public/js/app.js"></script>
+<script type="text/javascript" src="public/js/app.controller.js"></script>
 </head>
 <body>
 <div class="container-fluid">
 
-    <div>
-        <label>Search: <input ng-model="searchText"></label>
-    </div>
+    <header class="header" id="header">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="left__block">
+                    <div class="header__search">
+                        <label for="header__search__in">
+                            Search:
+                            <input id="header__search__in" ng-model="searchText"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="right__block">User</div>
+            </div>
+        </div>
+    </header>
 
     <div class="row" ng-if="searchText">
         <div class="col-md-4 box box-yellow">
@@ -37,9 +50,7 @@
                 <div ng-repeat="items in containers">
                     <div ng-repeat="item in items | filter: searchText"
                          ng-click="open('md', item)"
-                         ui-sref="item({item:item.label})">
-                        {{item.label}} - {{items.length}}
-                    </div>
+                         ui-sref="item({item:item.label})">{{item.label}} - {{items.length}}</div>
                     <div ng-if="!items.length">hello world</div>
                 </div>
             </div>
